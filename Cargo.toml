@@ -1,0 +1,10 @@
+[package]
+name = "leet_code"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "leet_code"
+path = "src/solutions.rs"
+
+[dependencies]
