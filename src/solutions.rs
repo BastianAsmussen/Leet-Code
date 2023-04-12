@@ -20,6 +20,31 @@ impl Solution {
             nums3[len / 2] as f64
         }
     }
+    
+    pub fn trap(height: Vec<i32>) -> i32 {
+        let n = height.len();
+        
+        if n < 3 {
+            return 0;
+        }
+        
+        let mut max_height = vec![0; n];
+        max_height[0] = height[0];
+        
+        for i in 1..n {
+            max_height[i] = max_height[i - 1].max(height[i]);
+        }
+        
+        let mut water = 0;
+        let mut right_max = height[n - 1];
+        
+        for i in (0..n).rev() {
+            right_max = right_max.max(height[i]);
+            water += max_height[i].min(right_max) - height[i];
+        }
+        
+        water
+    }
 }
 
 fn main() {}
