@@ -1,3 +1,5 @@
+use std::collections::BinaryHeap;
+
 struct Solution;
 
 impl Solution {
@@ -61,6 +63,92 @@ impl Solution {
         
         // If we reach this point, no indices were found.
         vec![]
+    }
+
+    pub fn int_to_roman(num: i32) -> String {
+
+        let mut num = num;
+        let mut result = String::new();
+
+        while num > 0 {
+            if num >= 1000 {
+                result.push('M');
+                num -= 1000;
+            } else if num >= 900 {
+                result.push_str("CM");
+                num -= 900;
+            } else if num >= 500 {
+                result.push('D');
+                num -= 500;
+            } else if num >= 400 {
+                result.push_str("CD");
+                num -= 400;
+            } else if num >= 100 {
+                result.push('C');
+                num -= 100;
+            } else if num >= 90 {
+                result.push_str("XC");
+                num -= 90;
+            } else if num >= 50 {
+                result.push('L');
+                num -= 50;
+            } else if num >= 40 {
+                result.push_str("XL");
+                num -= 40;
+            } else if num >= 10 {
+                result.push('X');
+                num -= 10;
+            } else if num >= 9 {
+                result.push_str("IX");
+                num -= 9;
+            } else if num >= 5 {
+                result.push('V');
+                num -= 5;
+            } else if num >= 4 {
+                result.push_str("IV");
+                num -= 4;
+            } else {
+                result.push('I');
+                num -= 1;
+            }
+        }
+
+        result
+    }
+
+    pub fn roman_to_int(s: String) -> i32 {
+        let mut result = 0;
+        let mut prev = 0;
+
+        for c in s.chars() {
+            let curr = match c {
+                'I' => 1,
+                'V' => 5,
+                'X' => 10,
+                'L' => 50,
+                'C' => 100,
+                'D' => 500,
+                _ => 1_000,
+            };
+
+            result += curr;
+
+            if curr > prev {
+                result -= 2 * prev;
+            }
+
+            prev = curr;
+        }
+
+        result
+    }
+
+    pub fn is_palindrome(x: i32) -> bool {
+        // Convert x to a string.
+        let s = x.to_string();
+
+        // Check if the string is equal to its reverse.
+        s == s.chars().rev().collect::<String>()
     }
 }
 
