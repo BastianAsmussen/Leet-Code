@@ -1,6 +1,5 @@
 use std::cmp::Reverse;
 use std::collections::BinaryHeap;
-use std::time::Instant;
 
 struct Solution;
 
@@ -231,46 +230,6 @@ impl Solution {
         dp[cost.len()]
     }
 
-    pub fn find_next_prime(n: u128) -> u128 {
-        fn is_prime(n: u128) -> bool {
-            if n <= 1 {
-                return false;
-            }
-
-            if n <= 3 {
-                return true;
-            }
-
-            if n % 2 == 0 || n % 3 == 0 {
-                return false;
-            }
-
-            let mut i = 5;
-            while i * i <= n {
-                if n % i == 0 {
-                    return false;
-                }
-                i += 6;
-                if n % i == 0 {
-                    return false;
-                }
-                i += 2;
-            }
-
-            true
-        }
-
-        let mut num =
-            if n < 2 { 2 }
-            else { n + 1 };
-
-        while !is_prime(num) {
-            num += 1;
-        }
-
-        num
-    }
-
     pub fn permute(nums: Vec<i32>) -> Vec<Vec<i32>> {
         let mut result = vec![];
 
@@ -344,7 +303,7 @@ impl Solution {
         }
 
         for i in 0..nums.len() {
-            if used[i] || (i > 0 && nums[i] == nums[i-1] && !used[i-1]) {
+            if used[i] || (i > 0 && nums[i] == nums[i - 1] && !used[i - 1]) {
                 continue;
             }
 
@@ -359,6 +318,4 @@ impl Solution {
     }
 }
 
-fn main() {
-    println!("{:?}", Solution::permute(vec![1, 2, 3]));
-}
+fn main() {}

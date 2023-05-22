@@ -16,3 +16,43 @@ My solutions to Leet Code problems.
 - Given an array of integers `nums` and an integer `target`, return indices of the two numbers such that they add up to `target`.
 - [Problem](https://leetcode.com/problems/two-sum/description/)
 - [Solution](https://github.com/BastianAsmussen/Leet-Code/blob/main/src/solutions.rs)
+
+### 4) Integer to Roman:
+- Given an integer, convert it to a roman numeral.
+- [Problem](https://leetcode.com/problems/integer-to-roman/)
+- [Solution](https://github.com/BastianAsmussen/Leet-Code/blob/main/src/solutions.rs)
+
+### 5) Roman to Integer:
+- Given a roman numeral, convert it to an integer.
+- [Problem](https://leetcode.com/problems/roman-to-integer/)
+- [Solution](https://github.com/BastianAsmussen/Leet-Code/blob/main/src/solutions.rs)
+
+### 6) Palindrome Number:
+- Given an integer `x`, return `true` if `x` is palindrome integer.
+- [Problem](https://leetcode.com/problems/palindrome-number/)
+- [Solution](https://github.com/BastianAsmussen/Leet-Code/blob/main/src/solutions.rs)
+
+### 7) Network Delay Time:
+- You are given a network of `n` nodes, labeled from `1` to `n`. You are also given `times`, a list of travel times as directed edges `times[i] = (ui, vi, wi)`, where `ui` is the source node, `vi` is the target node, and `wi` is the time it takes for a signal to travel from source to target.
+- [Problem](https://leetcode.com/problems/network-delay-time/)
+- [Solution](https://github.com/BastianAsmussen/Leet-Code/blob/main/src/solutions.rs)
+
+### 8) Find Smallest Letter Greater Than Target:
+- Given a characters array `letters` that is sorted in non-decreasing order and a character `target`, return *the smallest character in the array that is larger than* `target`.
+- [Problem](https://leetcode.com/problems/find-smallest-letter-greater-than-target/)
+- [Solution](https://github.com/BastianAsmussen/Leet-Code/blob/main/src/solutions.rs)
+
+### 9) Min Cost Climbing Stairs:
+- You are given an integer array `cost` where `cost[i]` is the cost of `ith` step on a staircase. Once you pay the cost, you can either climb one or two steps.
+- [Problem](https://leetcode.com/problems/min-cost-climbing-stairs/)
+- [Solution](https://github.com/BastianAsmussen/Leet-Code/blob/main/src/solutions.rs)
+
+### 10) Permutations:
+- Given an array `nums` of distinct integers, return all the possible permutations. You can return the answer in **any order**.
+- [Problem](https://leetcode.com/problems/permutations/)
+- [Solution](https://github.com/BastianAsmussen/Leet-Code/blob/main/src/solutions.rs)
+
+### 11) Permutations II:
+- Given a collection of numbers, `nums`, that might contain duplicates, return all possible unique permutations in any order.
+- [Problem](https://leetcode.com/problems/permutations-ii/)
+- [Solution](https://github.com/BastianAsmussen/Leet-Code/blob/main/src/solutions.rs)
