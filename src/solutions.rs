@@ -1,4 +1,6 @@
+use std::cmp::Reverse;
 use std::collections::BinaryHeap;
+use std::time::Instant;
 
 struct Solution;
 
@@ -8,10 +10,10 @@ impl Solution {
         let mut nums3 = nums1;
         nums3.append(&mut nums2);
         nums3.sort();
-        
+
         // Find the length of the combined vector
         let len = nums3.len();
-        
+
         if len % 2 == 0 {
             // If the length is even, return the average of the two middle elements
             let a = nums3[len / 2];
@@ -22,51 +24,50 @@ impl Solution {
             nums3[len / 2] as f64
         }
     }
-    
+
     pub fn trap(height: Vec<i32>) -> i32 {
         let n = height.len();
-        
+
         if n < 3 {
             return 0;
         }
-        
+
         let mut max_height = vec![0; n];
         max_height[0] = height[0];
-        
+
         for i in 1..n {
             max_height[i] = max_height[i - 1].max(height[i]);
         }
-        
+
         let mut water = 0;
         let mut right_max = height[n - 1];
-        
+
         for i in (0..n).rev() {
             right_max = right_max.max(height[i]);
             water += max_height[i].min(right_max) - height[i];
         }
-        
+
         water
     }
-    
+
     pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
         let mut map = std::collections::HashMap::new();
-        
+
         for (i, num) in nums.iter().enumerate() {
             let diff = target - num;
-            
+
             if let Some(j) = map.get(&diff) {
                 return vec![*j as i32, i as i32];
             }
-            
+
             map.entry(num).or_insert(i as i32);
         }
-        
+
         // If we reach this point, no indices were found.
         vec![]
     }
 
     pub fn int_to_roman(num: i32) -> String {
-
         let mut num = num;
         let mut result = String::new();
 
@@ -150,6 +151,214 @@ impl Solution {
         // Check if the string is equal to its reverse.
         s == s.chars().rev().collect::<String>()
     }
+
+    pub fn network_delay_time(times: Vec<Vec<i32>>, n: i32, k: i32) -> i32 {
+        const INF: i32 = 0x7FFFFFFF; // 2 ^ 31 - 1
+
+        // Create an adjacency list to represent the network
+        let mut graph = vec![vec![]; n as usize + 1];
+        for time in times {
+            let u = time[0] as usize;
+            let v = time[1] as usize;
+            let w = time[2];
+            graph[u].push((v, w));
+        }
+
+        // Initialize the distance array with infinity values
+        let mut dist = vec![INF; n as usize + 1];
+
+        // Create a priority queue to store nodes and their distances
+        let mut pq = BinaryHeap::new();
+
+        // Set the distance of the source node to 0 and push it into the priority queue
+        dist[k as usize] = 0;
+        pq.push(Reverse((0, k)));
+
+        while let Some(Reverse((d, u))) = pq.pop() {
+            // If the current distance is greater than the stored distance, skip
+            if d > dist[u as usize] {
+                continue;
+            }
+
+            // Iterate over neighbors of the current node
+            for &(v, w) in &graph[u as usize] {
+                let new_dist = d + w;
+
+                // If the new distance is smaller, update the distance and push the node into the priority queue
+                if new_dist < dist[v] {
+                    dist[v] = new_dist;
+                    pq.push(Reverse((new_dist, v as i32)));
+                }
+            }
+        }
+
+        // Find the maximum distance in the distance array
+        let max_dist = dist.iter().skip(1).cloned().max().unwrap();
+
+        if max_dist == INF {
+            // If there is a node that cannot receive the signal, return -1
+            -1
+        } else {
+            // Otherwise, return the maximum distance
+            max_dist
+        }
+    }
+
+    pub fn next_greatest_letter(letters: Vec<char>, target: char) -> char {
+        let mut left = 0;
+        let mut right = letters.len();
+
+        while left < right {
+            let mid = left + (right - left) / 2;
+
+            if letters[mid] <= target {
+                left = mid + 1;
+            } else {
+                right = mid;
+            }
+        }
+
+        letters[left % letters.len()]
+    }
+
+    pub fn min_cost_climbing_stairs(cost: Vec<i32>) -> i32 {
+        let mut dp = vec![0; cost.len() + 1];
+
+        for i in 2..dp.len() {
+            dp[i] = std::cmp::min(dp[i - 1] + cost[i - 1], dp[i - 2] + cost[i - 2]);
+        }
+
+        dp[cost.len()]
+    }
+
+    pub fn find_next_prime(n: u128) -> u128 {
+        fn is_prime(n: u128) -> bool {
+            if n <= 1 {
+                return false;
+            }
+
+            if n <= 3 {
+                return true;
+            }
+
+            if n % 2 == 0 || n % 3 == 0 {
+                return false;
+            }
+
+            let mut i = 5;
+            while i * i <= n {
+                if n % i == 0 {
+                    return false;
+                }
+                i += 6;
+                if n % i == 0 {
+                    return false;
+                }
+                i += 2;
+            }
+
+            true
+        }
+
+        let mut num =
+            if n < 2 { 2 }
+            else { n + 1 };
+
+        while !is_prime(num) {
+            num += 1;
+        }
+
+        num
+    }
+
+    pub fn permute(nums: Vec<i32>) -> Vec<Vec<i32>> {
+        let mut result = vec![];
+
+        let nums = nums;
+        let n = nums.len() as i32;
+
+        let mut indices = vec![0; n as usize];
+
+        for i in 0..n {
+            indices[i as usize] = i;
+        }
+
+        result.push(nums.clone());
+
+        loop {
+            let mut i = n - 1;
+
+            while i > 0 && indices[i as usize - 1] >= indices[i as usize] {
+                i -= 1;
+            }
+
+            if i == 0 {
+                break;
+            }
+
+            let mut j = n - 1;
+
+            while indices[j as usize] <= indices[i as usize - 1] {
+                j -= 1;
+            }
+
+            indices.swap((i - 1) as usize, j as usize);
+
+            j = n - 1;
+
+            while i < j {
+                indices.swap(i as usize, j as usize);
+                i += 1;
+                j -= 1;
+            }
+
+            let mut permutation = vec![0; n as usize];
+
+            for i in 0..n {
+                permutation[i as usize] = nums[indices[i as usize] as usize];
+            }
+
+            result.push(permutation);
+        }
+
+        result
+    }
+
+    pub fn permute_unique(nums: Vec<i32>) -> Vec<Vec<i32>> {
+        let mut res = Vec::new();
+        let mut nums = nums;
+        nums.sort(); // Sort the input numbers to handle duplicates
+
+        let mut used = vec![false; nums.len()];
+        let mut current = Vec::new();
+
+        Self::backtrack(&nums, &mut used, &mut current, &mut res);
+
+        res
+    }
+
+    fn backtrack(nums: &[i32], used: &mut Vec<bool>, current: &mut Vec<i32>, res: &mut Vec<Vec<i32>>) {
+        if current.len() == nums.len() {
+            res.push(current.clone());
+            return;
+        }
+
+        for i in 0..nums.len() {
+            if used[i] || (i > 0 && nums[i] == nums[i-1] && !used[i-1]) {
+                continue;
+            }
+
+            used[i] = true;
+            current.push(nums[i]);
+
+            Self::backtrack(nums, used, current, res);
+
+            used[i] = false;
+            current.pop();
+        }
+    }
 }
 
-fn main() {}
+fn main() {
+    println!("{:?}", Solution::permute(vec![1, 2, 3]));
+}
